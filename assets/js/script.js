@@ -1,12 +1,4 @@
-/* ============================= */
-/* DOM CONTENT LOADED */
-/* ============================= */
-
 document.addEventListener("DOMContentLoaded", function () {
-
-/* ============================= */
-/* THEME SWITCH WITH LOCALSTORAGE */
-/* ============================= */
 
 const themeButtons = document.querySelectorAll("[data-theme]");
 const themeStylesheet = document.getElementById("themeStylesheet");
@@ -49,12 +41,7 @@ button.addEventListener("click", function () {
 
 });
 
-/* ============================= */
-/* TYPING ANIMATION */
-/* ============================= */
-
 var TxtType = function (el, toRotate, period) {
-
 
 this.toRotate = toRotate;
 this.el = el;
@@ -63,8 +50,6 @@ this.period = parseInt(period, 10) || 2000;
 this.txt = "";
 this.isDeleting = false;
 this.tick();
-
-
 };
 
 TxtType.prototype.tick = function () {
@@ -122,16 +107,11 @@ if (toRotate) {
 
 });
 
-/* ============================= */
-/* EMAILJS CONTACT FORM */
-/* ============================= */
-
 emailjs.init("909AWBwBMRx1glAW_");
 
 const form = document.getElementById("contact-form");
 
 if (form) {
-
 
 form.addEventListener("submit", function (e) {
 
@@ -155,12 +135,7 @@ form.addEventListener("submit", function (e) {
 
 });
 
-
 }
-
-/* ============================= */
-/* SCROLL REVEAL ANIMATION */
-/* ============================= */
 
 function reveal() {
 
@@ -177,7 +152,6 @@ reveals.forEach((element) => {
   }
 
 });
-
 
 }
 
