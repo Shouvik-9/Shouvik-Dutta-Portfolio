@@ -1,3 +1,4 @@
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&display=swap");
 
 /* Global variables */
@@ -473,4 +474,17 @@ footer a {
   textarea {
     width: 100%;
   }
+}
+
+/* SCROLL ANIMATION */
+
+.reveal > * {
+opacity:0;
+transform:translateY(50px);
+transition:all 0.8s ease;
+}
+
+.reveal.active > * {
+opacity:1;
+transform:translateY(0);
 }
