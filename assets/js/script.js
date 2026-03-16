@@ -3,29 +3,48 @@ document.addEventListener("DOMContentLoaded", function () {
 const themeButtons = document.querySelectorAll("[data-theme]");
 const themeStylesheet = document.getElementById("themeStylesheet");
 
-// Load saved theme
-const savedTheme = localStorage.getItem("selectedTheme");
+/* DOM CONTENT LOADED */
 
-if (savedTheme) {
-themeStylesheet.setAttribute("href", savedTheme);
+document.addEventListener("DOMContentLoaded", function () {
+
+  /* THEME SWITCH WITH LOCALSTORAGE */
+
+  const themeButtons = document.querySelectorAll("[data-theme]");
+  const themeStylesheet = document.getElementById("themeStylesheet");
+
+  // Load saved theme
+  const savedTheme = localStorage.getItem("selectedTheme");
+
+  if (savedTheme) {
+    themeStylesheet.setAttribute("href", savedTheme);
 
 
-themeButtons.forEach((btn) => {
-  if (btn.getAttribute("data-theme") === savedTheme) {
-    btn.classList.add("active-theme");
+    themeButtons.forEach((btn) => {
+      if (btn.getAttribute("data-theme") === savedTheme) {
+        btn.classList.add("active-theme");
+      }
+    });
+
   }
-});
+
+  themeButtons.forEach((button) => {
 
 
-}
+    button.addEventListener("click", function () {
 
-themeButtons.forEach((button) => {
+      const themeFile = this.getAttribute("data-theme");
 
+      // Apply theme
+      themeStylesheet.setAttribute("href", themeFile);
 
-button.addEventListener("click", function () {
+      // Save theme in localStorage
+      localStorage.setItem("selectedTheme", themeFile);
 
-  const themeFile = this.getAttribute("data-theme");
+      // Update active button
+      themeButtons.forEach((btn) => btn.classList.remove("active-theme"));
+      this.classList.add("active-theme");
 
+<<<<<<< HEAD
   // Apply theme
   themeStylesheet.setAttribute("href", themeFile);
 
@@ -130,32 +149,187 @@ form.addEventListener("submit", function (e) {
 
     alert("❌ Failed to send message.");
     console.error(error);
+=======
+    });
+>>>>>>> 1374633 (Shouvik Dutta Portfolio)
 
   });
 
-});
+  /* TYPING ANIMATION */
 
+  var TxtType = function (el, toRotate, period) {
+
+    this.toRotate = toRotate;
+    this.el = el;
+    this.loopNum = 0;
+    this.period = parseInt(period, 10) || 2000;
+    this.txt = "";
+    this.isDeleting = false;
+    this.tick();
+
+<<<<<<< HEAD
 }
 
 function reveal() {
+=======
+
+  };
+
+  TxtType.prototype.tick = function () {
+
+    var i = this.loopNum % this.toRotate.length;
+    var fullTxt = this.toRotate[i];
+
+    if (this.isDeleting) {
+      this.txt = fullTxt.substring(0, this.txt.length - 1);
+    } else {
+      this.txt = fullTxt.substring(0, this.txt.length + 1);
+    }
+
+    this.el.innerHTML = '<span class="wrap">' + this.txt + "</span>";
+
+    var that = this;
+
+    var delta = 200 - Math.random() * 100;
+
+    if (this.isDeleting) delta /= 2;
+
+    if (!this.isDeleting && this.txt === fullTxt) {
+
+      delta = this.period;
+      this.isDeleting = true;
+
+    }
+    else if (this.isDeleting && this.txt === "") {
+
+      this.isDeleting = false;
+      this.loopNum++;
+      delta = 500;
+
+    }
+
+    setTimeout(function () {
+      that.tick();
+    }, delta);
+>>>>>>> 1374633 (Shouvik Dutta Portfolio)
 
 
-const reveals = document.querySelectorAll(".reveal");
+  };
 
-reveals.forEach((element) => {
+  const elements = document.querySelectorAll(".typewrite");
 
-  const windowHeight = window.innerHeight;
-  const elementTop = element.getBoundingClientRect().top;
+  elements.forEach((el) => {
 
-  if (elementTop < windowHeight - 100) {
-    element.classList.add("active");
+
+    const toRotate = el.getAttribute("data-type");
+    const period = el.getAttribute("data-period");
+
+    if (toRotate) {
+      new TxtType(el, JSON.parse(toRotate), period);
+    }
+
+
+  });
+
+  const skillsSection = document.querySelector(".skills-section");
+  const progressBars = document.querySelectorAll(".progress");
+
+  function showSkills() {
+
+    const sectionPos = skillsSection.getBoundingClientRect().top;
+    const screenPos = window.innerHeight - 100;
+
+    if (sectionPos < screenPos) {
+
+      progressBars.forEach(bar => {
+        bar.style.width = bar.dataset.width;
+      });
+
+    }
+
   }
 
-});
+  window.addEventListener("scroll", showSkills);
 
+  const timelineItems = document.querySelectorAll(".timeline-item");
+
+  function showTimeline() {
+
+    timelineItems.forEach((item) => {
+
+      const itemTop = item.getBoundingClientRect().top;
+      const trigger = window.innerHeight - 100;
+
+      if (itemTop < trigger) {
+        item.classList.add("show");
+      }
+
+    });
+
+  }
+
+  window.addEventListener("scroll", showTimeline);
+
+  /* EMAILJS CONTACT FORM */
+
+  emailjs.init("909AWBwBMRx1glAW_");
+
+  const form = document.getElementById("contact-form");
+
+  if (form) {
+
+<<<<<<< HEAD
 }
+=======
 
-window.addEventListener("scroll", reveal);
-window.addEventListener("load", reveal);
+    form.addEventListener("submit", function (e) {
+>>>>>>> 1374633 (Shouvik Dutta Portfolio)
+
+      e.preventDefault();
+
+      emailjs.sendForm(
+        "service_sfd3zqf",
+        "template_ue1yb85",
+        this
+      ).then(function () {
+
+        alert("✅ Message sent successfully!");
+        form.reset();
+
+      }, function (error) {
+
+        alert("❌ Failed to send message.");
+        console.error(error);
+
+      });
+
+    });
+
+
+  }
+
+  /* SCROLL REVEAL ANIMATION */
+
+  function reveal() {
+
+
+    const reveals = document.querySelectorAll(".reveal");
+
+    reveals.forEach((element) => {
+
+      const windowHeight = window.innerHeight;
+      const elementTop = element.getBoundingClientRect().top;
+
+      if (elementTop < windowHeight - 100) {
+        element.classList.add("active");
+      }
+
+    });
+
+
+  }
+
+  window.addEventListener("scroll", reveal);
+  window.addEventListener("load", reveal);
 
 });
