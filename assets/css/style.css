@@ -186,6 +186,17 @@ ul.social-icons {
   transition: all 0.3s ease 0s;
 }
 
+/* Skill Section */
+.skill p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.skill i {
+  font-size: 25px;
+}
+
 /* About Section */
 section.about-section {
   background-color: #22282f;
@@ -261,12 +272,14 @@ section.projects-section {
 }
 
 .projects-cards {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
 .projects-card-box {
-  width: 33.33%;
-  margin: 35px 10px;
+  width: 100%;
+  margin: 0;
   padding: 33px;
   background-color: #22282f;
   border-radius: 5px;
@@ -951,6 +964,11 @@ footer a {
   .skills-section {
     padding: 40px 20px;
   }
+
+  .projects-cards {
+    grid-template-columns: 1fr; /* 1 per row */
+  }
+}
 
   /* JOURNEY MOBILE FIX */
 

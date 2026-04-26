@@ -1,229 +1,215 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-/* =========================
-   THEME SWITCH
-========================= */
+  /* THEME SWITCH*/
 
-const themeButtons = document.querySelectorAll("[data-theme]");
-const themeStylesheet = document.getElementById("themeStylesheet");
+  const themeButtons = document.querySelectorAll("[data-theme]");
+  const themeStylesheet = document.getElementById("themeStylesheet");
 
-const savedTheme = localStorage.getItem("selectedTheme");
+  const savedTheme = localStorage.getItem("selectedTheme");
 
-if (savedTheme) {
-  themeStylesheet.setAttribute("href", savedTheme);
+  if (savedTheme) {
+    themeStylesheet.setAttribute("href", savedTheme);
 
-  themeButtons.forEach(btn => {
-    if (btn.getAttribute("data-theme") === savedTheme) {
-      btn.classList.add("active-theme");
-    }
-  });
-}
-
-themeButtons.forEach(button => {
-
-  button.addEventListener("click", function () {
-
-    const themeFile = this.getAttribute("data-theme");
-
-    themeStylesheet.setAttribute("href", themeFile);
-    localStorage.setItem("selectedTheme", themeFile);
-
-    themeButtons.forEach(btn => btn.classList.remove("active-theme"));
-    this.classList.add("active-theme");
-
-  });
-
-});
-
-
-/* =========================
-   TYPING ANIMATION
-========================= */
-
-var TxtType = function (el, toRotate, period) {
-
-  this.toRotate = toRotate;
-  this.el = el;
-  this.loopNum = 0;
-  this.period = parseInt(period, 10) || 2000;
-  this.txt = "";
-  this.isDeleting = false;
-  this.tick();
-
-};
-
-TxtType.prototype.tick = function () {
-
-  var i = this.loopNum % this.toRotate.length;
-  var fullTxt = this.toRotate[i];
-
-  if (this.isDeleting) {
-    this.txt = fullTxt.substring(0, this.txt.length - 1);
-  } else {
-    this.txt = fullTxt.substring(0, this.txt.length + 1);
+    themeButtons.forEach(btn => {
+      if (btn.getAttribute("data-theme") === savedTheme) {
+        btn.classList.add("active-theme");
+      }
+    });
   }
 
-  this.el.innerHTML = '<span class="wrap">' + this.txt + "</span>";
+  themeButtons.forEach(button => {
 
-  var that = this;
-  var delta = 200 - Math.random() * 100;
+    button.addEventListener("click", function () {
 
-  if (this.isDeleting) delta /= 2;
+      const themeFile = this.getAttribute("data-theme");
 
-  if (!this.isDeleting && this.txt === fullTxt) {
+      themeStylesheet.setAttribute("href", themeFile);
+      localStorage.setItem("selectedTheme", themeFile);
 
-    delta = this.period;
-    this.isDeleting = true;
+      themeButtons.forEach(btn => btn.classList.remove("active-theme"));
+      this.classList.add("active-theme");
 
-  } else if (this.isDeleting && this.txt === "") {
+    });
 
+  });
+
+
+  /* TYPING ANIMATION */
+
+  var TxtType = function (el, toRotate, period) {
+
+    this.toRotate = toRotate;
+    this.el = el;
+    this.loopNum = 0;
+    this.period = parseInt(period, 10) || 2000;
+    this.txt = "";
     this.isDeleting = false;
-    this.loopNum++;
-    delta = 500;
+    this.tick();
 
-  }
+  };
 
-  setTimeout(function () {
-    that.tick();
-  }, delta);
+  TxtType.prototype.tick = function () {
 
-};
+    var i = this.loopNum % this.toRotate.length;
+    var fullTxt = this.toRotate[i];
 
-const elements = document.querySelectorAll(".typewrite");
+    if (this.isDeleting) {
+      this.txt = fullTxt.substring(0, this.txt.length - 1);
+    } else {
+      this.txt = fullTxt.substring(0, this.txt.length + 1);
+    }
 
-elements.forEach(el => {
+    this.el.innerHTML = '<span class="wrap">' + this.txt + "</span>";
 
-  const toRotate = el.getAttribute("data-type");
-  const period = el.getAttribute("data-period");
+    var that = this;
+    var delta = 200 - Math.random() * 100;
 
-  if (toRotate) {
-    new TxtType(el, JSON.parse(toRotate), period);
-  }
+    if (this.isDeleting) delta /= 2;
 
-});
+    if (!this.isDeleting && this.txt === fullTxt) {
 
+      delta = this.period;
+      this.isDeleting = true;
 
-/* =========================
-   SKILLS ANIMATION
-========================= */
+    } else if (this.isDeleting && this.txt === "") {
 
-const skillsSection = document.querySelector(".skills-section");
-const progressBars = document.querySelectorAll(".progress");
+      this.isDeleting = false;
+      this.loopNum++;
+      delta = 500;
 
-function showSkills() {
+    }
 
-  if (!skillsSection) return;
+    setTimeout(function () {
+      that.tick();
+    }, delta);
 
-  const sectionPos = skillsSection.getBoundingClientRect().top;
-  const screenPos = window.innerHeight - 100;
+  };
 
-  if (sectionPos < screenPos) {
+  const elements = document.querySelectorAll(".typewrite");
 
-    progressBars.forEach(bar => {
-      bar.style.width = bar.dataset.width;
-    });
+  elements.forEach(el => {
 
-  }
+    const toRotate = el.getAttribute("data-type");
+    const period = el.getAttribute("data-period");
 
-}
-
-window.addEventListener("scroll", showSkills);
-
-
-/* =========================
-   TIMELINE ANIMATION
-========================= */
-
-const timelineItems = document.querySelectorAll(".timeline-item");
-
-function showTimeline() {
-
-  timelineItems.forEach(item => {
-
-    const itemTop = item.getBoundingClientRect().top;
-    const trigger = window.innerHeight - 100;
-
-    if (itemTop < trigger) {
-      item.classList.add("show");
+    if (toRotate) {
+      new TxtType(el, JSON.parse(toRotate), period);
     }
 
   });
 
-}
 
-window.addEventListener("scroll", showTimeline);
+  /*  SKILLS ANIMATION */
+
+  const skillsSection = document.querySelector(".skills-section");
+  const progressBars = document.querySelectorAll(".progress");
+
+  function showSkills() {
+
+    if (!skillsSection) return;
+
+    const sectionPos = skillsSection.getBoundingClientRect().top;
+    const screenPos = window.innerHeight - 100;
+
+    if (sectionPos < screenPos) {
+
+      progressBars.forEach(bar => {
+        bar.style.width = bar.dataset.width;
+      });
+
+    }
+
+  }
+
+  window.addEventListener("scroll", showSkills);
 
 
-/* =========================
-   EMAILJS CONTACT FORM
-========================= */
+  /* TIMELINE ANIMATION */
 
-emailjs.init("909AWBwBMRx1glAW_");
+  const timelineItems = document.querySelectorAll(".timeline-item");
 
-const form = document.getElementById("contact-form");
+  function showTimeline() {
 
-if (form) {
+    timelineItems.forEach(item => {
 
-  form.addEventListener("submit", function (e) {
+      const itemTop = item.getBoundingClientRect().top;
+      const trigger = window.innerHeight - 100;
 
-    e.preventDefault();
-
-    emailjs.sendForm(
-      "service_sfd3zqf",
-      "template_ue1yb85",
-      this
-    ).then(function () {
-
-      alert("✅ Message sent successfully!");
-      form.reset();
-
-    }, function (error) {
-
-      alert("❌ Failed to send message.");
-      console.error(error);
+      if (itemTop < trigger) {
+        item.classList.add("show");
+      }
 
     });
 
-  });
+  }
 
-}
+  window.addEventListener("scroll", showTimeline);
 
 
-/* =========================
-   SCROLL REVEAL
-========================= */
+  /* EMAILJS CONTACT FORM */
 
-function reveal() {
+  emailjs.init("909AWBwBMRx1glAW_");
 
-  const reveals = document.querySelectorAll(".reveal");
+  const form = document.getElementById("contact-form");
 
-  reveals.forEach(element => {
+  if (form) {
 
-    const windowHeight = window.innerHeight;
-    const elementTop = element.getBoundingClientRect().top;
+    form.addEventListener("submit", function (e) {
 
-    if (elementTop < windowHeight - 100) {
-      element.classList.add("active");
-    }
+      e.preventDefault();
 
-  });
+      emailjs.sendForm(
+        "service_sfd3zqf",
+        "template_ue1yb85",
+        this
+      ).then(function () {
 
-}
+        alert("✅ Message sent successfully!");
+        form.reset();
 
-window.addEventListener("scroll", reveal);
-window.addEventListener("load", reveal);
+      }, function (error) {
+
+        alert("❌ Failed to send message.");
+        console.error(error);
+
+      });
+
+    });
+
+  }
+
+
+  /* SCROLL REVEAL */
+
+  function reveal() {
+
+    const reveals = document.querySelectorAll(".reveal");
+
+    reveals.forEach(element => {
+
+      const windowHeight = window.innerHeight;
+      const elementTop = element.getBoundingClientRect().top;
+
+      if (elementTop < windowHeight - 100) {
+        element.classList.add("active");
+      }
+
+    });
+
+  }
+
+  window.addEventListener("scroll", reveal);
+  window.addEventListener("load", reveal);
 
 });
 
 
-/* =========================
-   MOBILE MENU
-========================= */
+/* MOBILE MENU */
 
-function openMenu(){
+function openMenu() {
   document.getElementById("navLinks").style.right = "0";
 }
 
-function closeMenu(){
+function closeMenu() {
   document.getElementById("navLinks").style.right = "-250px";
 }
